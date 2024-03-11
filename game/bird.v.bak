@@ -1,0 +1,25 @@
+module bird (
+    input wire clk,
+    input wire reset,
+    input wire flap,
+    output reg [9:0] bird_y
+);
+    // The bird's vertical position
+    reg [9:0] bird_y_next;
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            bird_y <= 240;  // Start in the middle of the screen
+        end else begin
+            bird_y <= bird_y_next;
+        end
+    end
+
+    always @* begin
+        if (flap) begin
+            bird_y_next = bird_y - 10;  // Move up
+        end else begin
+            bird_y_next = bird_y + 5;  // Fall down
+        end
+    end
+endmodule

@@ -1,0 +1,15 @@
+module clkdiv (
+    input wire cin, // clock input
+    output reg cout // clock output
+);
+    reg [31:0] count; // count register
+    parameter D = 32'd50000; // division factor for 1 ms (50 MHz / 1000)
+
+    always @(posedge cin) begin
+        count <= count + 32'd1; // increment the count
+        if (count >= (D-1)) begin
+            cout <= ~cout; // toggle the output clock
+            count <= 32'd0; // reset the count
+        end
+    end
+endmodule
